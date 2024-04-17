@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package proto;
+
+message Patient {
+  int64 id = 1;
+  string firstName = 2;
+  string lastName = 3;
+  string dateOfBirth = 4;
+  string gender = 5;
+  string address = 6;
+  string phoneNumber = 7;
+
+  repeated Hospital registeredHospitals = 8;
+}
+
+message Hospital {
+  int64 id = 1;
+  string name = 2;
+  string department = 3;
+  repeated Patient registeredPatientIds = 4;
+}
+
+message AddHospitalRequest {
+  Hospital hospital = 1;
+}
+
+message AddHospitalResponse {
+  Hospital hospital = 1;
+}
+
+message UpdateHospitalRequest {
+  Hospital hospital = 1;
+}
+
+message UpdateHospitalResponse {
+  Hospital updated_hospital = 1;
+}
+
+message DeleteHospitalRequest {
+  int64 id = 1;
+}
+
+message DeleteHospitalResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+service HospitalService {
+  rpc AddHospital(AddHospitalRequest) returns (AddHospitalResponse);
+  rpc UpdateHospital(UpdateHospitalRequest) returns (UpdateHospitalResponse);
+  rpc DeleteHospital(DeleteHospitalRequest) returns (DeleteHospitalResponse);
+}
