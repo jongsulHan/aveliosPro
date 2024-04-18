@@ -28,4 +28,8 @@ public class Hospital {
             inverseJoinColumns = @JoinColumn(name = "patient_id")
     )
     private List<Patient> registeredPatients;
+
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "treatment_id")
+    private List<Treatment> treatments;
 }

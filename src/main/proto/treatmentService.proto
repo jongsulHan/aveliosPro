@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package proto;
+
+import "common/common.proto";
+
+message AddTreatmentRequest {
+  common.Treatment treatment = 1;
+}
+
+message AddTreatmentResponse {
+  common.Treatment treatment= 1;
+}
+
+message DeleteTreatmentRequest {
+  int64 id = 1;
+}
+
+message DeleteTreatmentResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message UpdateTreatmentRequest {
+  common.Treatment treatment = 1;
+
+  string diagnosis = 2;
+}
+
+message UpdateTreatmentResponse {
+  common.Treatment treatment = 1;
+}
+
+service TreatmentService {
+  rpc AddTreatment(AddTreatmentRequest) returns (AddTreatmentResponse);
+  rpc DeleteTreatment(DeleteTreatmentRequest) returns (DeleteTreatmentResponse);
+  rpc UpdateTreatment(UpdateTreatmentRequest) returns (UpdateTreatmentResponse);
+}

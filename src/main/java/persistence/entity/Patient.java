@@ -37,7 +37,7 @@ public class Patient {
     @JoinColumn(name = "hospital_id")
     private List<Hospital> registeredHospitals;
 
-//    @OneToMany
-//    @JoinColumn(name = "treatment_id")
-//    private List<Treatment> treatments;
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "treatment_id")
+    private List<Treatment> treatments;
 }

@@ -20,3 +20,11 @@ message Hospital {
   string department = 3;
   repeated Patient registeredPatients = 4;
 }
+
+message Treatment {
+  int64 id = 1;
+  Patient patient = 2;
+  string diagnosis = 3;
+  string treatmentDate = 4;
+  Hospital hospital = 5;
+}

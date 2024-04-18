@@ -1,10 +1,7 @@
 package persistence.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -14,6 +11,7 @@ import java.time.LocalDate;
 @Table(name = "treatment")
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Treatment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,8 +22,9 @@ public class Treatment {
     @Column(name = "diagnosis")
     private String diagnosis;
     @Column(name = "treatment_date")
-    private LocalDate treatmentDate;
-//    @OneToOne(cascade = CascadeType.PERSIST)
-//    @JoinColumn(name = "hospital_id")
-//    private Hospital hospital;
+    private String treatmentDate;
+
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "hospital_id")
+    private Hospital hospital;
 }

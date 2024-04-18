@@ -24,16 +24,6 @@ CREATE TABLE treatment (
                            FOREIGN KEY (hospital_id) REFERENCES hospital(hospital_id)
 );
 
--- CREATE TABLE hospital_patient (
---                                   hospital_id BIGINT AUTO_INCREMENT PRIMARY KEY,
---                                   diagnosis VARCHAR(255) NOT NULL,
---                                   treatmentDate DATE,
---                                   physicianID VARCHAR(255),
---                                   notes VARCHAR(255),
---                                   hospital_id BIGINT,
---                                   FOREIGN KEY (hospital_id) REFERENCES hospital(hospital_id)
--- );
-
 CREATE TABLE hospital_patient (
                                   hospital_id BIGINT NOT NULL,
                                   patient_id BIGINT NOT NULL,

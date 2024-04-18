@@ -38,7 +38,7 @@ public class HospitalServiceTest {
         long hospitalId = 1L;
         String hospitalName = "Test Hospital";
         String department = "Cardiology";
-        Hospital hospital = new Hospital(hospitalId, hospitalName, department, Collections.emptyList());
+        Hospital hospital = new Hospital(hospitalId, hospitalName, department, Collections.emptyList(), Collections.emptyList());
         HospitalServiceOuterClass.AddHospitalRequest request = HospitalServiceOuterClass.AddHospitalRequest.newBuilder()
                 .setHospital(Common.Hospital.newBuilder()
                         .setId(hospitalId)
@@ -103,8 +103,8 @@ public class HospitalServiceTest {
 
     @Test
     public void testRegisterPatient_Success() {
-        long hospitalId = 1L;
-        long patientId = 2L;
+        long hospitalId = 1;
+        long patientId = 2;
         String firstName = "Thomas";
         String lastName = "Müller";
         LocalDate birthDate = LocalDate.of(1990, 1, 1);
@@ -115,11 +115,11 @@ public class HospitalServiceTest {
         String department = "Cardiology";
 
         Common.Hospital hospitalCommon = HospitalConverter.convertHospitalEntityToCommon(
-                new Hospital(hospitalId, hospitalName, department, new ArrayList<>()));
+                new Hospital(hospitalId, hospitalName, department, new ArrayList<>(), new ArrayList<>()));
         Common.Patient patientCommon = PatientConverter.convertPatientEntityToCommon(
-                new Patient(patientId, firstName, lastName, birthDate, gender, address, phoneNumber, new ArrayList<>()));
+                new Patient(patientId, firstName, lastName, birthDate, gender, address, phoneNumber, new ArrayList<>(), new ArrayList<>()));
         Common.Hospital updatedHospitalCommon = HospitalConverter.convertHospitalEntityToCommon(
-                new Hospital(hospitalId, hospitalName, department,List.of(PatientConverter.convertPatientCommonToEntity(patientCommon))));
+                new Hospital(hospitalId, hospitalName, department,List.of(PatientConverter.convertPatientCommonToEntity(patientCommon)), new ArrayList<>()));
         HospitalServiceOuterClass.RegisterPatientRequest request = HospitalServiceOuterClass.RegisterPatientRequest.newBuilder()
                 .setHospital(hospitalCommon)
                 .setPatient(patientCommon)
