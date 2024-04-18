@@ -2,39 +2,22 @@ syntax = "proto3";
 
 package proto;
 
-message Patient {
-  int64 id = 1;
-  string firstName = 2;
-  string lastName = 3;
-  string dateOfBirth = 4;
-  string gender = 5;
-  string address = 6;
-  string phoneNumber = 7;
-
-  repeated Hospital registeredHospitals = 8;
-}
-
-message Hospital {
-  int64 id = 1;
-  string name = 2;
-  string department = 3;
-  repeated Patient registeredPatientIds = 4;
-}
+import "common/common.proto";
 
 message AddHospitalRequest {
-  Hospital hospital = 1;
+  common.Hospital hospital = 1;
 }
 
 message AddHospitalResponse {
-  Hospital hospital = 1;
+  common.Hospital hospital = 1;
 }
 
 message UpdateHospitalRequest {
-  Hospital hospital = 1;
+  common.Hospital hospital = 1;
 }
 
 message UpdateHospitalResponse {
-  Hospital updated_hospital = 1;
+  common.Hospital updated_hospital = 1;
 }
 
 message DeleteHospitalRequest {
@@ -46,8 +29,27 @@ message DeleteHospitalResponse {
   string message = 2;
 }
 
+message RegisterPatientRequest {
+  common.Patient patient = 1;
+  common.Hospital hospital = 2;
+}
+
+message RegisterPatientResponse {
+  common.Hospital hospital = 1;
+}
+
+message GetHospitalPatientsRequest {
+  common.Hospital hospital = 1;
+}
+
+message GetHospitalPatientsResponse {
+  repeated common.Patient patients = 1;
+}
+
 service HospitalService {
+  rpc GetHospitalPatients(GetHospitalPatientsRequest) returns (GetHospitalPatientsResponse);
   rpc AddHospital(AddHospitalRequest) returns (AddHospitalResponse);
   rpc UpdateHospital(UpdateHospitalRequest) returns (UpdateHospitalResponse);
   rpc DeleteHospital(DeleteHospitalRequest) returns (DeleteHospitalResponse);
+  rpc RegisterPatient(RegisterPatientRequest) returns (RegisterPatientResponse);
 }

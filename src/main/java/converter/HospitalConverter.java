@@ -1,25 +1,26 @@
 package converter;
 
-import lombok.AllArgsConstructor;
 import persistence.entity.Hospital;
-import proto.HospitalServiceOuterClass;
+import proto.common.Common;
 
 public class HospitalConverter {
-    public static Hospital convertHospitalToHospital(HospitalServiceOuterClass.Hospital hospital) {
+    public static Hospital convertHospitalCommonToEntity(Common.Hospital hospital) {
+        var list = hospital.getRegisteredPatientsList();
         return Hospital.builder()
                 .id(hospital.getId())
                 .name(hospital.getName())
                 .department(hospital.getDepartment())
-                .registeredPatients(PatientConverter.convertPatientToPatient(hospital.getRegisteredPatientIdsList()))
+                .registeredPatients(list.stream().map(PatientConverter::convertPatientCommonToEntity).toList())
                 .build();
     }
 
-    public static HospitalServiceOuterClass.Hospital convertHospitalToGeneratedHospital(Hospital hospital) {
-        return HospitalServiceOuterClass.Hospital.newBuilder()
+    public static Common.Hospital convertHospitalEntityToCommon(Hospital hospital) {
+        var list = hospital.getRegisteredPatients();
+        return Common.Hospital.newBuilder()
                 .setId(hospital.getId())
                 .setDepartment(hospital.getDepartment())
                 .setName(hospital.getName())
-                .addAllRegisteredPatientIds(PatientConverter.convertPatientFromPatient(hospital.getRegisteredPatients()))
+                .addAllRegisteredPatients(list.stream().map(PatientConverter::convertPatientEntityToCommon).toList())
                 .build();
     }
 }
